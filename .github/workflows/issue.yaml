@@ -1,0 +1,12 @@
+name: Github Issue Feedback
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  collect-feedback:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo user
+        run: echo "${{ github.event.issue.actor }}"
