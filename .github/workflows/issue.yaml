@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo user
-        run: echo "${{ github.event.issue.actor }}"
+        run: echo "${{ github.event.issue.actor.login }}"
