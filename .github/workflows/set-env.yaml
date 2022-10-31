@@ -14,4 +14,4 @@ jobs:
   set-env:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ env.CHART_VERSION }}"
+      - run: echo "${{ env.CHART_PATH }}"
