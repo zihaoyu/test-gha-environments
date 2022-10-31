@@ -1,0 +1,17 @@
+---
+name: Set environment
+on:
+  workflow_dispatch:
+    inputs:
+      CHART_VERSION:
+        description: 'Version of the Helm chart'
+        required: false
+        default: '0.0.1'
+        type: string
+env:
+  CHART_PATH: "https://myrepo.com/mychart-${{ inputs.CHART_VERSION }}.tgz"
+jobs:
+  set-env:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ env.CHART_VERSION }}"
