@@ -18,6 +18,9 @@ jobs:
     steps:
       - name: Check
         if: inputs.FULL_RUN
+        run: echo "This is Full Run"
+          
+      - name: Print
         run: |
           if [[ "${{ inputs.FULL_RUN }}" == 'false' ]]; then
             echo "Not FULL_RUN"
