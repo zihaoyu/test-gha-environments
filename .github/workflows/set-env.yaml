@@ -3,15 +3,17 @@ name: Set environment
 on:
   workflow_dispatch:
     inputs:
-      CHART_VERSION:
-        description: 'Version of the Helm chart'
+      FULL_RUN:
+        description: 'Full run or not'
+        type: boolean
         required: false
-        default: '0.0.1'
-        type: string
-env:
-  CHART_PATH: "https://myrepo.com/mychart-${{ inputs.CHART_VERSION }}.tgz"
+        default: false
 jobs:
   set-env:
     runs-on: ubuntu-latest
+    if: inputs.FULL_RUN
     steps:
-      - run: echo "${{ env.CHART_PATH }}"
+      - run: |
+        if [[ "${{ inputs.FULL_RUN }}" == 'false' ]]; then
+          echo "Not FULL_RUN"
+        fi
