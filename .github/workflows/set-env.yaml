@@ -8,12 +8,17 @@ on:
         type: boolean
         required: false
         default: false
+        
 jobs:
   set-env:
+    defaults:
+      run:
+        shell: bash
     runs-on: ubuntu-latest
-    if: inputs.FULL_RUN
     steps:
-      - run: |
-        if [[ "${{ inputs.FULL_RUN }}" == 'false' ]]; then
-          echo "Not FULL_RUN"
-        fi
+      - name: Check
+        if: inputs.FULL_RUN
+        run: |
+          if [[ "${{ inputs.FULL_RUN }}" == 'false' ]]; then
+            echo "Not FULL_RUN"
+          fi
