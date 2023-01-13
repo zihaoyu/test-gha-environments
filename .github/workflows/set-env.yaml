@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check
-        if: inputs.FULL_RUN
-        run: echo "This is Full Run"
+        if: ${{ !inputs.FULL_RUN }}
+        run: echo "This is NOT Full Run"
           
       - name: Print
         run: |
