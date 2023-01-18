@@ -1,2 +1,1 @@
 service: test-gha-environments
-deploymentEnable: false
