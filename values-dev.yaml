@@ -1,3 +1,2 @@
 env:
   ENV: dev
-deploymentEnable: false
