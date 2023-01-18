@@ -48,6 +48,7 @@ jobs:
             deploy_enable=false
           elif [[ "$deploy_enable_default" == "false" ]] && [[ "$deploy_enable_target" == "null" ]]; then
             # deploymentEnable=false in default values file, and not overwritten in target (2)
+            deploy_enable=false
           else
             # all the other scenarios
             deploy_enable=true
