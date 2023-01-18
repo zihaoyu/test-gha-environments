@@ -1,6 +1,10 @@
 ---
 name: Check files
 on:
+  push:
+    branches:
+      - main
+      - zihaoyu/test-files
   workflow_dispatch:
 
 jobs:
