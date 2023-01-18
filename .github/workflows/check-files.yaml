@@ -1,0 +1,37 @@
+---
+name: Check files
+on:
+  workflow_dispatch:
+
+jobs:
+  check-files:
+    defaults:
+      run:
+        shell: bash
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check
+        run: |
+          # check default values file
+          values_default_file=values-default.yaml
+          if [[ -f $values_default_file ]]; then
+            cat $values_default_file
+            deploy_enable_default=$(yq '.deploymentEnable' $values_default_file)
+            echo "checking default values file, deploy_enable=$deploy_enable_default"
+          fi
+          # check target values file
+          values_target_file=values-dev.yaml
+          if [[ -f $values_target_file ]]; then
+            cat $values_target_file
+            deploy_enable_target=$(yq '.deploymentEnable' $values_target_file)
+            echo "checking target values file, deploy_enable=$deploy_enable_target"
+          fi
+
+          if [[ "$deploy_enable_default" = "false" ]] || [[ "$deploy_enable_target" == "false" ]]; then
+            # if false is explicitly specified in any of the values files
+            deploy_enable=false
+          else
+            deploy_enable=true
+          fi
+
+          echo "final deploy_enable=$deploy_enable"
