@@ -1,1 +1,2 @@
 service: test-gha-environments
+deploymentEnable: true

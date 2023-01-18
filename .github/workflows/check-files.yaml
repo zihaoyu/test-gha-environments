@@ -24,6 +24,7 @@ jobs:
             deploy_enable_default=$(yq '.deploymentEnable' $values_default_file)
             echo "checking default values file, deploy_enable=$deploy_enable_default"
           fi
+
           # check target values file
           values_target_file=values-dev.yaml
           if [[ -f $values_target_file ]]; then
@@ -32,10 +33,23 @@ jobs:
             echo "checking target values file, deploy_enable=$deploy_enable_target"
           fi
 
-          if [[ "$deploy_enable_default" = "false" ]] || [[ "$deploy_enable_target" == "false" ]]; then
-            # if false is explicitly specified in any of the values files
+          # matrix
+          # 1) default=false, target=false, final=false
+          # 2) default=false, target=null,  final=false
+          # 3) default=false, target=true,  final=true
+          # 4) default=null,  target=false, final=false
+          # 5) default=null,  target=null,  final=true
+          # 6) default=null,  target=true,  final=true
+          # 7) default=true,  target=false, final=false
+          # 8) default=true,  target=null,  final=true
+          # 9) default=true,  target=true,  final=true
+          if [[ "$deploy_enable_target" == "false" ]]; then
+            # deploymentEnable=false explicity set in target values file, ignore default (1, 4, 7)
             deploy_enable=false
+          elif [[ "$deploy_enable_default" == "false" ]] && [[ "$deploy_enable_target" == "null" ]]; then
+            # deploymentEnable=false in default values file, and not overwritten in target (2)
           else
+            # all the other scenarios
             deploy_enable=true
           fi
 
