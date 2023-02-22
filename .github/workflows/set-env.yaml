@@ -3,11 +3,11 @@ name: Set environment
 on:
   workflow_dispatch:
     inputs:
-      TOKEN:
-        description: 'A token'
-        type: string
+      GENERATE_TOKEN:
+        description: 'Generate token or not'
+        type: boolean
         required: false
-        default: ""
+        default: false
         
 jobs:
   set-env:
@@ -16,6 +16,11 @@ jobs:
         shell: bash
     runs-on: ubuntu-latest
     steps:
+      - name: Generate token
+        id: generate-token
+        if: inputs.GENERATE_TOKEN
+        run: |
+          echo "token=abc" | tee -a $GITHUB_OUTPUT
       - uses: actions/checkout@v3
         with:
-          token: "${{ inputs.TOKEN }}"
+          token: "${{ steps.generate-token.outputs.token }}"
