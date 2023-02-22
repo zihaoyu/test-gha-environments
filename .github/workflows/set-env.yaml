@@ -3,11 +3,11 @@ name: Set environment
 on:
   workflow_dispatch:
     inputs:
-      FULL_RUN:
-        description: 'Full run or not'
-        type: boolean
+      TOKEN:
+        description: 'A token'
+        type: string
         required: false
-        default: false
+        default: ""
         
 jobs:
   set-env:
@@ -16,12 +16,6 @@ jobs:
         shell: bash
     runs-on: ubuntu-latest
     steps:
-      - name: Check
-        if: ${{ !inputs.FULL_RUN }}
-        run: echo "This is NOT Full Run"
-          
-      - name: Print
-        run: |
-          if [[ "${{ inputs.FULL_RUN }}" == 'false' ]]; then
-            echo "Not FULL_RUN"
-          fi
+      - name: actions/checkout@v3
+        with:
+          token: "${{ inputs.TOKEN }}"
